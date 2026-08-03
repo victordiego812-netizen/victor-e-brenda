@@ -1,0 +1,66 @@
+// Abrir convite
+  const openBtn = document.getElementById('openInviteBtn');
+  const mainContent = document.getElementById('mainContent');
+  const heroSection = document.querySelector('.hero');
+  openBtn.addEventListener('click', () => {
+    document.body.classList.remove('pre-open');
+    heroSection.classList.add('opened');
+    mainContent.classList.add('revealed');
+    mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Countdown até 10/04/2027 16:30
+  const weddingDate = new Date('2027-04-10T16:30:00');
+  function updateCountdown(){
+    const now = new Date();
+    let diff = weddingDate - now;
+    if (diff < 0) diff = 0;
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const mins = Math.floor((diff / (1000*60)) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+    document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-min').textContent = String(mins).padStart(2,'0');
+    document.getElementById('cd-sec').textContent = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Fotos da galeria
+  const galleryGrid = document.getElementById('galleryGrid');
+  const photos = [
+    { src: 'images/foto-1.webp', alt: 'Victor e Brenda refletidos em um espelho decorado com folhagens' },
+    { src: 'images/foto-2.webp', alt: 'Victor e Brenda diante do espelho no dia do noivado' },
+    { src: 'images/foto-3.webp', alt: 'Victor e Brenda juntos em uma celebração' },
+    { src: 'images/foto-4.webp', alt: 'Victor e Brenda em um registro de Natal' }
+  ];
+
+  photos.forEach(({ src, alt }) => {
+    const figure = document.createElement('figure');
+    figure.className = 'tile';
+
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.width = 1204;
+    img.height = 1600;
+
+    figure.appendChild(img);
+    galleryGrid.appendChild(figure);
+  });
+
+  // Navegação e melhorias de interface
+  const nav = document.getElementById('siteNav');
+  const updateNav = () => nav.classList.toggle('visible', window.scrollY > 140);
+  updateNav();
+  window.addEventListener('scroll', updateNav, { passive: true });
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', () => document.body.classList.remove('pre-open'));
+  });
+
+  // O RSVP será integrado na etapa final do projeto.
+
