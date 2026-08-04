@@ -184,6 +184,33 @@
     .moment-inline .editorial img{aspect-ratio:4/5;}
     .moment-stack .editorial img{aspect-ratio:4/5;}
 
+    .gifts{background:linear-gradient(180deg, rgba(111,145,195,.07), transparent 34%), var(--ivory-deep);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}
+    .gifts-intro{max-width:720px;margin:0 auto 34px;text-align:center;font-size:1.12rem;}
+    .gift-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+    .gift-tab{border:1px solid var(--gold);background:transparent;color:var(--blue-night);padding:11px 18px;text-transform:uppercase;letter-spacing:.16em;font-family:'EB Garamond',serif;font-size:.7rem;cursor:pointer;transition:.25s ease;}
+    .gift-tab.active,.gift-tab:hover{background:var(--gold);color:var(--ivory);}
+    .gift-panel{display:none;}
+    .gift-panel.active{display:block;}
+    .gift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+    .gift-card{background:#fff;border:1px solid rgba(48,72,111,.10);box-shadow:var(--shadow-soft);padding:22px;display:flex;flex-direction:column;min-height:285px;position:relative;overflow:hidden;}
+    .gift-card::after{content:'';position:absolute;width:110px;height:110px;border:1px solid rgba(180,145,58,.18);border-radius:50%;right:-42px;top:-42px;}
+    .gift-icon{width:46px;height:46px;border:1px solid rgba(180,145,58,.5);display:grid;place-items:center;color:var(--gold);margin-bottom:18px;}
+    .gift-icon svg{width:25px;height:25px;}
+    .gift-card .gift-type{text-transform:uppercase;letter-spacing:.18em;font-size:.66rem;color:var(--gold);}
+    .gift-card h3{font-size:1.5rem;color:var(--blue-night);margin-top:6px;}
+    .gift-card p{margin:10px 0 0;color:var(--ink);opacity:.8;font-style:italic;}
+    .gift-price{font-family:'Cormorant Garamond',serif;color:var(--blue-deep);font-size:1.45rem;font-weight:600;margin-top:auto;padding-top:20px;}
+    .gift-action{margin-top:14px;display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--gold);background:transparent;color:var(--blue-night);text-decoration:none;text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;font-family:'EB Garamond',serif;cursor:pointer;transition:.25s ease;}
+    .gift-action:hover{background:var(--gold);color:var(--ivory);transform:translateY(-2px);}
+    .gift-action.is-disabled{opacity:.5;cursor:not-allowed;pointer-events:none;}
+    .pix-box{margin-top:24px;background:var(--blue-night);color:var(--ivory);padding:26px;text-align:center;border:1px solid rgba(216,196,149,.25);}
+    .pix-box strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--gold-soft);}
+    .pix-box p{margin:8px auto 16px;max-width:620px;opacity:.8;font-style:italic;}
+    .pix-key{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;}
+    .pix-key code{background:rgba(255,255,255,.08);border:1px solid rgba(216,196,149,.35);padding:10px 14px;color:var(--ivory);font-family:inherit;}
+    .pix-copy{border:1px solid var(--gold);background:transparent;color:var(--gold-soft);padding:10px 16px;text-transform:uppercase;letter-spacing:.14em;font-family:'EB Garamond',serif;cursor:pointer;}
+    .pix-copy:hover{background:var(--gold);color:var(--blue-night);}
+    .gift-note{text-align:center;margin-top:24px;font-style:italic;color:var(--blue-deep);}
     .coming-soon{background:var(--blue-night);color:var(--ivory);}
     .coming-soon .eyebrow{color:var(--gold-soft);}
     .coming-soon .section-head h2{color:var(--ivory);}
@@ -247,6 +274,7 @@
       .p2{right:0;top:210px;}
       .p3{left:24px;bottom:18px;}
       .moment-inline{grid-template-columns:1fr;}
+      .gift-grid{grid-template-columns:1fr 1fr;}
       .music-player{right:12px;bottom:12px;padding-right:8px;}
       .music-info{display:none;}
       .music-bars{margin:0 4px 0 0;}
@@ -257,6 +285,7 @@
       .polaroid-cluster{min-height:760px;}
       .polaroid{width:188px;}
       .detail-photo-stack{grid-template-columns:1fr;}
+      .gift-grid{grid-template-columns:1fr;}
       .mockup-card.is-tall{transform:none;}
     }
   </style>
@@ -270,6 +299,7 @@
       <a href="#historia">História</a>
       <a href="#detalhes">Detalhes</a>
       <a href="#momentos">Momentos</a>
+      <a href="#presentes">Presentes</a>
       <a href="#confirmacao">Presença</a>
     </div>
   </nav>
@@ -454,6 +484,90 @@
       </div>
     </section>
 
+    <section class="gifts" id="presentes">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Lista de presentes</div>
+          <h2>Um carinho para o nosso novo capítulo</h2>
+        </div>
+        <p class="gifts-intro">Sua presença já será o nosso maior presente. Mas, caso queira contribuir com o início da nossa vida a dois, preparamos opções de presentes físicos e cotas simbólicas com muito carinho.</p>
+
+        <div class="gift-tabs" role="tablist" aria-label="Tipos de presentes">
+          <button class="gift-tab active" type="button" data-gift-tab="fisicos" aria-selected="true">Presentes físicos</button>
+          <button class="gift-tab" type="button" data-gift-tab="cotas" aria-selected="false">Cotas via Pix</button>
+        </div>
+
+        <div class="gift-panel active" id="gift-fisicos">
+          <div class="gift-grid">
+            <article class="gift-card">
+              <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 10h16v10H4z"/><path d="M12 10v10M3 6h18v4H3z"/><path d="M12 6c-2.7 0-4.5-1-4.5-2.4C7.5 2.5 8.4 2 9.2 2 11 2 12 4.5 12 6zM12 6c2.7 0 4.5-1 4.5-2.4 0-1.1-.9-1.6-1.7-1.6C13 2 12 4.5 12 6z"/></svg></div>
+              <span class="gift-type">Casa nova</span>
+              <h3>Jogo de panelas</h3>
+              <p>Para os primeiros almoços, receitas e domingos na cozinha.</p>
+              <div class="gift-price">Sugestão: R$ 350</div>
+              <a class="gift-action is-disabled" href="#" aria-disabled="true">Link em breve</a>
+            </article>
+            <article class="gift-card">
+              <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 7h14v11H5z"/><path d="M8 7V5h8v2M8 18v2M16 18v2"/></svg></div>
+              <span class="gift-type">Cozinha</span>
+              <h3>Air fryer</h3>
+              <p>Para facilitar a rotina e deixar os jantares mais práticos.</p>
+              <div class="gift-price">Sugestão: R$ 450</div>
+              <a class="gift-action is-disabled" href="#" aria-disabled="true">Link em breve</a>
+            </article>
+            <article class="gift-card">
+              <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+              <span class="gift-type">Quarto</span>
+              <h3>Jogo de cama</h3>
+              <p>Para começar a vida a dois com conforto e aconchego.</p>
+              <div class="gift-price">Sugestão: R$ 220</div>
+              <a class="gift-action is-disabled" href="#" aria-disabled="true">Link em breve</a>
+            </article>
+          </div>
+        </div>
+
+        <div class="gift-panel" id="gift-cotas">
+          <div class="gift-grid">
+            <article class="gift-card">
+              <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M6 8h12l2 4-2 7H6l-2-7z"/><path d="M8 8l1-3h6l1 3"/></svg></div>
+              <span class="gift-type">Lua de mel</span>
+              <h3>Jantar dos recém-casados</h3>
+              <p>Uma noite especial para celebrar o início dessa nova fase.</p>
+              <div class="gift-price">R$ 100</div>
+              <button class="gift-action pix-gift" type="button" data-value="100" data-label="Jantar dos recém-casados">Presentear via Pix</button>
+            </article>
+            <article class="gift-card">
+              <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 19h16M6 16l4-5 3 3 5-7"/><circle cx="18" cy="7" r="1.5"/></svg></div>
+              <span class="gift-type">Experiência</span>
+              <h3>Passeio especial</h3>
+              <p>Uma lembrança nova para entrar no álbum da vida a dois.</p>
+              <div class="gift-price">R$ 150</div>
+              <button class="gift-action pix-gift" type="button" data-value="150" data-label="Passeio especial">Presentear via Pix</button>
+            </article>
+            <article class="gift-card">
+              <div class="gift-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></div>
+              <span class="gift-type">Casa nova</span>
+              <h3>Ajuda para o novo lar</h3>
+              <p>Uma contribuição para os primeiros detalhes da nossa casa.</p>
+              <div class="gift-price">R$ 250</div>
+              <button class="gift-action pix-gift" type="button" data-value="250" data-label="Ajuda para o novo lar">Presentear via Pix</button>
+            </article>
+          </div>
+
+          <div class="pix-box">
+            <strong id="pixTitle">Pix dos noivos</strong>
+            <p id="pixDescription">Escolha uma cota acima ou envie o valor que desejar. A chave Pix será adicionada quando vocês definirem qual conta usar.</p>
+            <div class="pix-key">
+              <code id="pixKeyText">CHAVE PIX A DEFINIR</code>
+              <button class="pix-copy" id="copyPixBtn" type="button" disabled>Copiar chave Pix</button>
+            </div>
+          </div>
+        </div>
+
+        <p class="gift-note">Os nomes, valores e links podem ser alterados depois sem mudar o layout da página.</p>
+      </div>
+    </section>
+
     <section class="coming-soon" id="confirmacao">
       <div class="wrap">
         <div class="section-head" style="margin-bottom:0;">
@@ -551,6 +665,51 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    const PIX_KEY = '';
+    const giftTabs = document.querySelectorAll('[data-gift-tab]');
+    const giftPanels = {
+      fisicos: document.getElementById('gift-fisicos'),
+      cotas: document.getElementById('gift-cotas')
+    };
+    giftTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.giftTab;
+        giftTabs.forEach(item => {
+          const active = item === tab;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+        Object.entries(giftPanels).forEach(([key, panel]) => panel.classList.toggle('active', key === target));
+      });
+    });
+
+    const pixKeyText = document.getElementById('pixKeyText');
+    const copyPixBtn = document.getElementById('copyPixBtn');
+    const pixTitle = document.getElementById('pixTitle');
+    const pixDescription = document.getElementById('pixDescription');
+    if (PIX_KEY) {
+      pixKeyText.textContent = PIX_KEY;
+      copyPixBtn.disabled = false;
+    }
+    document.querySelectorAll('.pix-gift').forEach(button => {
+      button.addEventListener('click', () => {
+        pixTitle.textContent = button.dataset.label;
+        pixDescription.textContent = `Cota sugerida de R$ ${button.dataset.value}. Você pode usar esse valor ou contribuir com outra quantia.`;
+        document.querySelector('[data-gift-tab="cotas"]').click();
+        document.getElementById('gift-cotas').scrollIntoView({behavior:'smooth', block:'center'});
+      });
+    });
+    copyPixBtn.addEventListener('click', async () => {
+      if (!PIX_KEY) return;
+      try {
+        await navigator.clipboard.writeText(PIX_KEY);
+        copyPixBtn.textContent = 'Chave copiada';
+        setTimeout(() => copyPixBtn.textContent = 'Copiar chave Pix', 1800);
+      } catch (error) {
+        copyPixBtn.textContent = 'Copie manualmente';
+      }
+    });
 
     const nav = document.getElementById('siteNav');
     const updateNav = () => nav.classList.toggle('visible', window.scrollY > 140);
