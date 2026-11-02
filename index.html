@@ -149,35 +149,38 @@ async function getGifts(){if(!inviteToken)return referenceGifts();try{const x=aw
 function escapeText(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function money(v){return Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
 const giftPhotoMap=[
-  [/panela de pressão/i,'https://brinox.vteximg.com.br/arquivos/ids/278185-800-800/panela-de-pressao-com-fundo-triplo-ultra-4-litros-brinox.jpg.jpg?v=638803346338700000'],
-  [/assadeiras?/i,'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=900&q=82'],
-  [/facas?|tábua de corte/i,'https://www.wspanelas.com/wp-content/uploads/2024/06/kit-chef-nakiri-santoku.jpg'],
-  [/utensílios?/i,'https://homenkitchenshop.com/cdn/shop/articles/ChatGPT_Image_Jun_16_2026_12_41_01_PM.png?v=1781593943&width=900'],
-  [/purificador de água/i,'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=900&q=82'],
-  [/ramekins?|bowls?/i,'https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?auto=format&fit=crop&w=900&q=82'],
-  [/taças de sobremesa/i,'https://images.unsplash.com/photo-1513558161293-cdee9ed3ba95?auto=format&fit=crop&w=900&q=82'],
-  [/jarra/i,'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=82'],
+  [/panela de pressão/i,'https://www.barazzoni.it/cdn/shop/files/65379069650c1fc3dea8c15cf49fce60.jpg?v=1760461082&width=1200'],
+  [/jogo de assadeiras/i,'https://product-hub-prd.madeiramadeira.com.br/3472897/images/b653c14a-872a-49a9-b4f0-e7dd01b6e40f25148096jogodeassadeirasretangularesrochedopolido3pecassku56190111500x484.jpg'],
+  [/facas?|tábua de corte/i,'https://www.tramontina.com.sg/cdn/shop/files/1_6d3e6692-4520-48b3-a675-31e6078b1903.png?v=1730613900&width=1200'],
+  [/utensílios?/i,'https://i.ebayimg.com/images/g/i-MAAOSwXoRhjeNb/s-l400.jpg'],
+  [/purificador de água/i,'https://coopera.vtexassets.com/arquivos/ids/63958789/17538807060123.jpg?v=638929865128330000'],
+  [/ramekins?|bowls?/i,'https://www.inovaporcelanas.com.br/public/produtos/33/025-ramequim-de-porcelana-200-ml-branco-grande_g.jpg'],
+  [/taças de sobremesa/i,'https://d9a2b0af1mfg9.cloudfront.net/Custom/Content/Products/27/14/27143_29071-jogo-6pc-taca-sobremesa-dubois-240ml-pr-12196-29552_z1_638333307045101908.png'],
+  [/jarra/i,'https://www.moinhoatacadista.com.br/image/cache/data/Produtos/JA/JARRA-DE-VIDRO-15LT-TRANSPARENTE-BAR-LISA-NADIR-M-COR-NAO-DEFINIDA-B4E42580-1-700x700.jpg.webp'],
   [/toalha de mesa|panos de prato/i,'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=82'],
-  [/batedeira|liquidificador/i,'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=900&q=82'],
-  [/air fryer/i,'https://dunard.cdn.magazord.com.br/img/2026/01/blog/18255/lista-de-eletrodomesticos-dunard.jpg'],
-  [/micro-ondas/i,'https://pricedropusa.com/cdn/shop/collections/ChatGPT_Image_Nov_26_2025_04_51_10_PM_31be0543-ace9-454b-8c97-89b1c2c780fd.png?v=1764197830'],
-  [/sanduicheira|grill/i,'https://qtmart.shop/cdn/shop/collections/Kitchen_Appliances.png?v=1781794431&width=900'],
-  [/ferro de passar/i,'https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=900&q=82'],
-  [/aspirador/i,'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=900&q=82'],
-  [/colchão|jogo de cama|lençol|edredom|cobre-leito/i,'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=82'],
-  [/espelho|cortina/i,'https://swellstays.com.au/files/100-casa-burnside/_1920x1920_fit_center-center_none/00002102.jpg'],
-  [/smart tv/i,'https://hiraoka.com.pe/media/catalog/product/c/o/combo_1_27_1.jpg?bg-color=255%2C255%2C255&canvas=700%3A560&fit=bounds&height=560&quality=85&width=700'],
-  [/ventilador|aquecedor/i,'https://purline.fr/cdn/shop/files/venty-zonda--112593-ambiente.jpg?v=1774438436'],
-  [/kit banheiro|toalhas de banho|roupão/i,'https://www.rettic.com/uploads/luxury-bed-linen-uae-2026-02-10T12-45-43.853Z.png'],
-  [/lua de mel/i,'https://tourpackages.asia/upload/blog-post/A_couple_enjoying_a_romantic_dinner_on_a_private_beach%2C_with_the_ocean_sparkling_in_the_background..PNG'],
-  [/jantar/i,'https://paradiseweddings.com/storage/edm-romantic-dinner-at-beach.jpg'],
+  [/batedeira/i,'https://britania.vtexassets.com/arquivos/ids/241361/Cozinha-BKT83_00.jpg?v=638197785062470000'],
+  [/liquidificador/i,'https://britania.vtexassets.com/arquivos/ids/241361/Cozinha-BKT83_00.jpg?v=638197785062470000'],
+  [/air fryer/i,'https://down-br.img.susercontent.com/file/sg-11134201-7rfhl-m95z5nur78v631'],
+  [/micro-ondas/i,'https://consul.vtexassets.com/arquivos/ids/267976-800-800?aspect=true&height=800&v=638975360656400000&width=800'],
+  [/sanduicheira|grill/i,'https://carrefourbr.vtexassets.com/arquivos/ids/136374872/b6382f6ab4004d889e524af70f209a5e.jpg?v=638405583818530000'],
+  [/ferro de passar/i,'https://a-static.mlcdn.com.br/{w}x{h}/ferro-de-passar-roupa-britania-a-vapor-1200w-bfe1000r-antiaderente-passa-na-vertical/unboxinglove/14754832368/f8a432c3abfed8dfb6f035a6f1bc6870.jpeg'],
+  [/aspirador/i,'https://electrolux.vtexassets.com/arquivos/ids/214777/aspirador-com-saco-para-po-sonic--son10--_Detalhe1.jpg?v=638872543175630000'],
+  [/colchão/i,'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=82'],
+  [/jogo de cama|lençol|edredom|cobre-leito/i,'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=82'],
+  [/espelho/i,'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=82'],
+  [/cortina/i,'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=82'],
+  [/smart tv/i,'https://d30u9wim1barf6.cloudfront.net/Custom/Content/Products/99/06/990657_tv-multilaser-43-full-hd-funcao-smart-wi-fi-tl015_l1_637365504688855060.jpg'],
+  [/ventilador/i,'https://images.unsplash.com/photo-1618941716939-553df3c6c278?auto=format&fit=crop&w=900&q=82'],
+  [/aquecedor/i,'https://images.unsplash.com/photo-1615874694520-474822394e73?auto=format&fit=crop&w=900&q=82'],
+  [/kit banheiro|toalhas de banho|roupão/i,'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=82'],
+  [/lua de mel|jantar dos recém-casados|jantar/i,'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=82'],
   [/passeio|viagem/i,'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=82'],
   [/lar|casa/i,'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=82']
 ];
 const giftFallbackPhoto='https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=82';
 function giftPhoto(g){const name=String(g.name||'');const found=giftPhotoMap.find(([pattern])=>pattern.test(name));return found?found[1]:giftFallbackPhoto}
 function giftDescription(g){const n=String(g.name||'').toLowerCase();if(/lua de mel/.test(n))return 'Uma lembrança especial para nossa viagem a dois.';if(/jantar/.test(n))return 'Uma noite especial para celebrar o começo dessa nova etapa.';if(/passeio/.test(n))return 'Uma experiência para guardar na memória.';if(/lar|casa/.test(n))return 'Um carinho para construir nosso novo lar.';return ''}
-function giftMarkup(g){const amount=money(g.suggested_value||0),description=String(g.description||giftDescription(g)||'').trim();return '<article class="gift-card"><div class="gift-card-photo"><img src="'+giftPhoto(g)+'" alt="'+escapeText(g.name)+'" loading="lazy"><span class="gift-card-tag">'+escapeText(g.category||'Presente')+'</span></div><div class="gift-card-body"><h3>'+escapeText(g.name)+'</h3>'+(description?'<p>'+escapeText(description)+'</p>':'')+'<strong class="gift-card-price">'+amount+'</strong><div class="gift-card-actions"><button class="gift-present-btn" data-complete="'+escapeText(g.id)+'">Presentear</button><button class="gift-partial-btn" data-contribute="'+escapeText(g.id)+'">Ajude a presentear</button></div></div></article>'}
+function giftMarkup(g){const amount=money(g.suggested_value||0),description=String(g.description||giftDescription(g)||'').trim();return '<article class="gift-card"><div class="gift-card-photo"><img src="'+giftPhoto(g)+'" alt="'+escapeText(g.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\''+giftFallbackPhoto+'\'"><span class="gift-card-tag">'+escapeText(g.category||'Presente')+'</span></div><div class="gift-card-body"><h3>'+escapeText(g.name)+'</h3>'+(description?'<p>'+escapeText(description)+'</p>':'')+'<strong class="gift-card-price">'+amount+'</strong><div class="gift-card-actions"><button class="gift-present-btn" data-complete="'+escapeText(g.id)+'">Presentear</button><button class="gift-partial-btn" data-contribute="'+escapeText(g.id)+'">Ajude a presentear</button></div></div></article>'}
 let cachedGiftList=[];function isPixGift(g){return String(g.gift_type||'').toLowerCase()==='pix'||/pix|cota/i.test(String(g.category||''))||String(g.id||'').startsWith('pix-reference-')}
 function showGiftCategory(category){const filtered=cachedGiftList.filter(g=>category==='pix'?isPixGift(g):!isPixGift(g));$('giftCategories').style.display='none';$('giftCatalogView').style.display='block';$('giftTitle').textContent=category==='pix'?'Presentes via Pix':'Presentes físicos';$('giftSub').textContent=category==='pix'?'Escolha uma experiência para presentear ou contribua com o valor que desejar.':'Escolha um presente para nossa casa e essa nova etapa.';$('giftList').innerHTML=filtered.map(giftMarkup).join('')||'<p>Não há opções nesta categoria no momento.</p>';const target=$('giftList');const selectGift=(btn,complete)=>{selectedGift=filtered.find(g=>String(g.id)===btn.dataset[complete?'complete':'contribute']);if(!selectedGift)return;$('contributionTitle').textContent=complete?'Presentear: '+selectedGift.name:'Contribuir com: '+selectedGift.name;$('contributionGiftName').value=selectedGift.name;$('contributionAmount').value=complete?Number(selectedGift.suggested_value||100).toFixed(2):'';$('contributionAmount').readOnly=complete;$('donorName').value='';$('contributionMessage').textContent=complete?'O valor integral deste presente será preenchido para você.':'Digite o valor que deseja contribuir.';closeModals();openModal('contributionModal')};target.querySelectorAll('[data-complete]').forEach(btn=>btn.addEventListener('click',()=>selectGift(btn,true)));target.querySelectorAll('[data-contribute]').forEach(btn=>btn.addEventListener('click',()=>selectGift(btn,false)))}async function renderGiftModal(){cachedGiftList=await getGifts();$('giftTitle').textContent='Presentes';$('giftSub').textContent='Escolha como você gostaria de presentear os noivos.';$('giftCategories').style.display='grid';$('giftCatalogView').style.display='none';}
 $('copyPixKey').addEventListener('click',async()=>{if(!pixKey)return;try{await navigator.clipboard.writeText(pixKey);$('copyPixKey').textContent='Chave copiada!'}catch{$('contributionMessage').textContent='Não foi possível copiar automaticamente. Selecione e copie a chave exibida.'}});
