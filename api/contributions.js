@@ -72,7 +72,13 @@ module.exports = async function handler(req, res) {
         db('wedding_pix_contributions?select=id,donor_name,gift_name,amount_cents,status,created_at,confirmed_at&order=created_at.desc&limit=300'),
         db('invitees?select=id,display_name,guest_limit,rsvp_status,rsvp_count,rsvp_notes,created_at,updated_at&or=(rsvp_status.eq.yes,rsvp_status.eq.no)&order=updated_at.desc&limit=500')
       ]);
-      return send(200, { contributions: rows, rsvps });
+      // Hide only the couple's own test RSVP from the admin list; keep the database record untouched.
+      const visibleRsvps = rsvps.filter(x => !(
+        x.display_name === 'Victor' &&
+        x.rsvp_notes === 'Recado: Felicidades' &&
+        String(x.created_at || '').startsWith('2026-11-01T16:38:41')
+      ));
+      return send(200, { contributions: rows, rsvps: visibleRsvps });
     }
     if (body.action === 'admin_confirm') {
       const id = String(body.id || '');
