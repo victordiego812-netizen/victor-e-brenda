@@ -54,6 +54,61 @@ module.exports = async (req, res) => {
       return res.status(200).json({ gifts, reservations });
     }
 
+    if (body.action === 'save') {
+      const id = String(body.id || '').trim();
+      const name = String(body.name || '').trim().replace(/\\s+/g, ' ');
+      const description = String(body.description || '').trim();
+      const storeName = String(body.store_name || '').trim();
+      const storeUrl = String(body.store_url || '').trim();
+      const imageUrl = String(body.image_url || '').trim();
+
+      if (name.length < 2 || name.length > 120) {
+        return res.status(400).json({ error: 'Informe o nome do presente (até 120 caracteres).' });
+      }
+      if (description.length > 500 || storeName.length > 100) {
+        return res.status(400).json({ error: 'Confira a descrição e o nome da loja.' });
+      }
+      for (const value of [storeUrl, imageUrl]) {
+        if (value) {
+          try {
+            if (new URL(value).protocol !== 'https:') throw new Error('invalid_url');
+          } catch {
+            return res.status(400).json({ error: 'Os links precisam ser endereços HTTPS válidos.' });
+          }
+        }
+      }
+
+      const payload = {
+        name,
+        description: description || null,
+        store_name: storeName || null,
+        store_url: storeUrl || null,
+        image_url: imageUrl || null,
+        category: 'Para nossa casa',
+        gift_type: 'physical',
+        active: true
+      };
+      let rows;
+      if (id) {
+        if (!/^[0-9a-f-]{36}$/i.test(id)) {
+          return res.status(400).json({ error: 'Presente inválido.' });
+        }
+        rows = await db('gifts?id=eq.' + encodeURIComponent(id) + '&select=id,name', {
+          method: 'PATCH',
+          body: JSON.stringify(payload)
+        });
+      } else {
+        rows = await db('gifts?select=id,name', {
+          method: 'POST',
+          body: JSON.stringify({ ...payload, sort_order: 999 })
+        });
+      }
+      if (!rows || !rows.length) {
+        return res.status(404).json({ error: 'Presente não encontrado para salvar.' });
+      }
+      return res.status(200).json({ ok: true, gift: rows[0] });
+    }
+
     if (body.action === 'reservation') {
       const id = String(body.id || '');
       if (!/^[0-9a-f-]{36}$/i.test(id)) {
