@@ -20,7 +20,7 @@ async function db(path, options = {}) {
 function isAdmin(req, body) {
   const expected = process.env.WEDDING_ADMIN_TOKEN || '';
   const authorization = req.headers.authorization || '';
-  const received = authorization.replace(/^Bearer\\s+/i, '').trim();
+  const received = authorization.replace(/^Bearer\s+/i, '').trim();
   const email = String(body.admin_email || '').trim().toLowerCase();
   return Boolean(expected) &&
     received.length === expected.length &&
@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
 
     if (body.action === 'save') {
       const id = String(body.id || '').trim();
-      const name = String(body.name || '').trim().replace(/\\s+/g, ' ');
+      const name = String(body.name || '').trim().replace(/\s+/g, ' ');
       const description = String(body.description || '').trim();
       const storeName = String(body.store_name || '').trim();
       const storeUrl = String(body.store_url || '').trim();
