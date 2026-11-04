@@ -9,7 +9,6 @@ async function db(path, options = {}) {
     signal: AbortSignal.timeout(12000),
     headers: {
       apikey: key,
-      authorization: 'Bearer ' + key,
       'content-type': 'application/json',
       Prefer: 'return=representation',
       ...options.headers
