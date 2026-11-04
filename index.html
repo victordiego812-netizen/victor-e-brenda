@@ -295,3 +295,34 @@ window.showGiftCategory = async function(category='physical'){
   });
 })();
 </script>
+
+
+<!-- Contagem regressiva independente e corrigida -->
+<script>
+(function(){
+  function startWeddingCountdown(){
+    const days=document.getElementById('d');
+    const hours=document.getElementById('h');
+    const minutes=document.getElementById('m');
+    const seconds=document.getElementById('s');
+    if(!days||!hours||!minutes||!seconds)return;
+    const target=new Date(2027,3,10,16,30,0,0).getTime();
+    const pad=n=>String(n).padStart(2,'0');
+    function update(){
+      const remaining=Math.max(0,target-Date.now());
+      const totalSeconds=Math.floor(remaining/1000);
+      days.textContent=pad(Math.floor(totalSeconds/86400));
+      hours.textContent=pad(Math.floor(totalSeconds%86400/3600));
+      minutes.textContent=pad(Math.floor(totalSeconds%3600/60));
+      seconds.textContent=pad(totalSeconds%60);
+    }
+    update();
+    window.setInterval(update,1000);
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',startWeddingCountdown,{once:true});
+  }else{
+    startWeddingCountdown();
+  }
+})();
+</script>
