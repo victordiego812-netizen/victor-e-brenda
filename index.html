@@ -271,3 +271,27 @@ window.showGiftCategory = async function(category='physical'){
 </script>
 
 <style>#paymentNotice{display:none!important}</style><script>const giftFoot=document.querySelector('.gift-foot');if(giftFoot)giftFoot.textContent='Se o presente estiver disponível, ele poderá ser reservado por um convidado. As reservas ficam registradas para os noivos.';</script>
+
+<!-- Correção independente do botão de abertura do convite -->
+<script>
+(function(){
+  const button=document.getElementById('open');
+  const hero=document.querySelector('.hero');
+  const main=document.getElementById('main');
+  if(!button||!hero||!main)return;
+  button.addEventListener('click',function(){
+    document.body.classList.remove('lock');
+    hero.classList.add('opened');
+    main.classList.add('on');
+    const nav=document.getElementById('nav');
+    if(nav)nav.classList.add('on');
+    window.setTimeout(function(){
+      main.scrollIntoView({behavior:'smooth',block:'start'});
+    },50);
+    const music=document.getElementById('music');
+    if(music)music.classList.add('on');
+    const audio=document.getElementById('audio');
+    if(audio){audio.volume=0.28;audio.play().catch(function(){});}
+  });
+})();
+</script>
