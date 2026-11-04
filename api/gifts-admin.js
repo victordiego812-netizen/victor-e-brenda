@@ -8,7 +8,6 @@ async function db(path, options = {}) {
     ...options,
     headers: {
       apikey: key,
-      authorization: 'Bearer ' + key,
       'content-type': 'application/json',
       Prefer: 'return=representation',
       ...options.headers
