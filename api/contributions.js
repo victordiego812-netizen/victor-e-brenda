@@ -68,9 +68,10 @@ module.exports = async function handler(req, res) {
     if (!adminAllowed(req, body)) return send(401, { error: 'Acesso restrito aos noivos.' });
 
     if (body.action === 'admin_list') {
-      const [rows, rsvps] = await Promise.all([
+      const [rows, rsvps, publicRsvps] = await Promise.all([
         db('wedding_pix_contributions?select=id,donor_name,gift_name,amount_cents,status,created_at,confirmed_at&order=created_at.desc&limit=300'),
-        db('invitees?select=id,display_name,guest_limit,rsvp_status,rsvp_count,rsvp_notes,created_at,updated_at&or=(rsvp_status.eq.yes,rsvp_status.eq.no)&order=updated_at.desc&limit=500')
+        db('invitees?select=id,display_name,guest_limit,rsvp_status,rsvp_count,rsvp_notes,created_at,updated_at&or=(rsvp_status.eq.yes,rsvp_status.eq.no)&order=updated_at.desc&limit=500'),
+        db('public_rsvps?select=id,full_name,guest_count,guest_names,attendance,message,created_at&order=created_at.desc&limit=500')
       ]);
       // Hide only the couple's own test RSVP from the admin list; keep the database record untouched.
       const visibleRsvps = rsvps.filter(x => !(
@@ -78,7 +79,8 @@ module.exports = async function handler(req, res) {
         x.rsvp_notes === 'Recado: Felicidades' &&
         String(x.created_at || '').startsWith('2026-11-01T16:38:41')
       ));
-      return send(200, { contributions: rows, rsvps: visibleRsvps });
+      const publicRows = publicRsvps.map(x => ({ id: x.id, display_name: x.full_name, rsvp_status: x.attendance, rsvp_count: x.guest_count, guest_names: x.guest_names || [], rsvp_notes: x.message, created_at: x.created_at, updated_at: x.created_at, source: 'public' }));
+      return send(200, { contributions: rows, rsvps: [...publicRows, ...visibleRsvps].sort((a,b) => new Date(b.updated_at || b.created_at) - new Date(a.updated_at || a.created_at)) });
     }
     if (body.action === 'admin_confirm') {
       const id = String(body.id || '');
