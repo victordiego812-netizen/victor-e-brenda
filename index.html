@@ -224,7 +224,6 @@ $('rsvpForm').addEventListener('submit',async e=>{e.preventDefault();const btn=e
 
 
 <style>
-#giftCategories [data-gift-category="pix"]{display:none!important}
 .gift-card{background:#fffdf9;border:1px solid rgba(180,145,58,.3);overflow:hidden;display:flex;flex-direction:column}
 .gift-card-photo{height:170px;background:#eee;position:relative}.gift-card-photo img{width:100%;height:100%;object-fit:cover}
 .gift-card-body{padding:16px;display:flex;flex-direction:column;gap:9px;flex:1}.gift-card-body h3{color:var(--bn);font-size:1.45rem}.gift-card-body p{margin:0;color:#687080;font-size:.95rem}
@@ -233,41 +232,10 @@ $('rsvpForm').addEventListener('submit',async e=>{e.preventDefault();const btn=e
 .gift-card-status{font-size:.8rem!important;color:var(--bd)!important;font-style:italic}
 </style>
 <script>
-document.querySelector('[data-gift-category="pix"]')?.remove();
-const giftTitleEl=document.getElementById('giftTitle');
+/* As categorias física e Pix permanecem disponíveis. A função principal
+   showGiftCategory já separa os itens e mantém o fluxo de contribuição. */
 const giftIntro=document.querySelector('.gift-intro');
-if(giftIntro)giftIntro.textContent='Escolha um presente físico para nossa casa. Você pode comprar em uma loja ou avisar que vai levar pessoalmente.';
-const giftChoice=document.querySelector('#giftCategories [data-gift-category="physical"]');
-if(giftChoice){giftChoice.querySelector('h3').textContent='Presentes físicos';giftChoice.querySelector('p').textContent='Escolha algo especial para nossa casa.';giftChoice.querySelector('.btn').textContent='Ver lista de presentes';}
-window.showGiftCategory = async function(category='physical'){
-  const filtered=cachedGiftList.filter(g=>!isPixGift(g));
-  document.getElementById('giftCategories').style.display='none';
-  document.getElementById('giftCatalogView').style.display='block';
-  giftTitleEl.textContent='Presentes para nossa casa';
-  document.getElementById('giftSub').textContent='Escolha como deseja presentear.';
-  const target=document.getElementById('giftList');
-  target.innerHTML=filtered.map(g=>{
-    const photo=g.image_url||giftPhoto(g);
-    const desc=g.description||giftDescription(g)||'Um presente para fazer parte do nosso novo lar.';
-    const status=g.reserved_by_me?(g.reservation_method==='online'?'Compra informada por você':'Reservado por você'):g.available===false?'Este presente já foi escolhido':'';
-    const query='https://www.google.com/search?tbm=shop&q='+encodeURIComponent(g.name);
-    const link=g.store_url||query;
-    const buyLabel=g.store_url?('Comprar em '+(g.store_name||'loja indicada')):'Encontrar em lojas';
-    const reserved=g.available===false&&!g.reserved_by_me;
-    return '<article class="gift-card"><div class="gift-card-photo"><img src="'+escapeText(photo)+'" alt="'+escapeText(g.name)+'" loading="lazy"></div><div class="gift-card-body"><h3>'+escapeText(g.name)+'</h3><p>'+escapeText(desc)+'</p>'+(status?'<p class="gift-card-status">'+escapeText(status)+'</p>':'')+'<div class="gift-card-actions"><a class="gift-buy-link" href="'+escapeText(link)+'" target="_blank" rel="noopener" data-buy-gift="'+escapeText(g.id)+'" '+(reserved?'aria-disabled="true" style="pointer-events:none;opacity:.4"':'')+'>'+escapeText(buyLabel)+'</a><button class="gift-personal-action" data-personal-gift="'+escapeText(g.id)+'" '+(reserved||g.reserved_by_me?'disabled':'')+'>'+(g.reserved_by_me?'Já reservado por você':reserved?'Indisponível':'Vou levar pessoalmente')+'</button></div></div></article>';
-  }).join('')||'<p>Estamos preparando a lista de presentes.</p>';
-  target.querySelectorAll('[data-personal-gift]').forEach(btn=>btn.addEventListener('click',async()=>{
-    btn.disabled=true;btn.textContent='Registrando...';
-    try{await api('reserve_gift',{gift_id:btn.dataset.personalGift,reservation_method:'personal'});await renderGiftModal();window.showGiftCategory('physical');}
-    catch(e){btn.disabled=false;btn.textContent='Vou levar pessoalmente';alert(e.message)}
-  }));
-  target.querySelectorAll('[data-buy-gift]').forEach(link=>link.addEventListener('click',async e=>{
-    const gift=filtered.find(x=>String(x.id)===link.dataset.buyGift);
-    if(!gift||gift.reserved_by_me||gift.available===false){e.preventDefault();return}
-    try{await api('reserve_gift',{gift_id:gift.id,reservation_method:'online'});setTimeout(async()=>{await renderGiftModal()},500)}
-    catch(err){e.preventDefault();alert(err.message)}
-  }));
-};
+if(giftIntro)giftIntro.textContent='Escolha entre presentes físicos para nossa casa ou experiências e contribuições via Pix.';
 </script>
 
 <style>#paymentNotice{display:none!important}</style><script>const giftFoot=document.querySelector('.gift-foot');if(giftFoot)giftFoot.textContent='Se o presente estiver disponível, ele poderá ser reservado por um convidado. As reservas ficam registradas para os noivos.';</script>
